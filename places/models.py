@@ -38,7 +38,7 @@ class Tour(models.Model):
 
 class TourImage(models.Model):
     ordinal_number = models.PositiveSmallIntegerField(
-        "Порядковый номер", choices=[(1, "1"), (2, "2")]
+        "Порядковый номер", default=2
     )
     image = models.ImageField("Изображение места")
     tour_detailes = models.ForeignKey(
