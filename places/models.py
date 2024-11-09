@@ -12,6 +12,7 @@ class TourDetailes(models.Model):
         return self.title
 
     class Meta:
+        ordering = ["title"]
         verbose_name = "Детали тура"
         verbose_name_plural = "Детали туров"
 
@@ -53,5 +54,6 @@ class TourImage(models.Model):
         return f"{self.ordinal_number} {self.tour_detailes.title}"
 
     class Meta:
+        ordering = ["ordinal_number"]
         verbose_name = "Картинка тура"
         verbose_name_plural = "Картинки туров"

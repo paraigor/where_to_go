@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'where_to_go_frontend.apps.WhereToGoFrontendConfig',
     'places.apps.PlacesConfig',
     'debug_toolbar',
+    'adminsortable2',
 ]
 
 MIDDLEWARE = [

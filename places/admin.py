@@ -1,3 +1,4 @@
+from adminsortable2.admin import SortableAdminMixin, SortableTabularInline
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -5,7 +6,7 @@ from django.utils.safestring import mark_safe
 from .models import Tour, TourDetailes, TourImage
 
 
-class TourImageInline(admin.TabularInline):
+class TourImageInline(SortableTabularInline):
     model = TourImage
     extra = 0
     readonly_fields = ["preview"]
@@ -18,7 +19,7 @@ class TourImageInline(admin.TabularInline):
 
 
 @admin.register(TourDetailes)
-class TourDetailesAdmin(admin.ModelAdmin):
+class TourDetailesAdmin(SortableAdminMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ("title", "description_short", "description_long")}),
         ("Координаты", {"fields": ("longitude", "latitude")}),
