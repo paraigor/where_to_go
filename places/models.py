@@ -1,10 +1,11 @@
 from django.db import models
+from tinymce import models as tinymce_models
 
 
 class TourDetailes(models.Model):
     title = models.CharField("Название", max_length=200)
     description_short = models.CharField("Короткое описание", max_length=250)
-    description_long = models.TextField("Полное описание")
+    description_long = tinymce_models.HTMLField("Полное описание")
     longitude = models.FloatField("Долгота")
     latitude = models.FloatField("Широта")
 
@@ -39,7 +40,7 @@ class Tour(models.Model):
 
 class TourImage(models.Model):
     ordinal_number = models.PositiveSmallIntegerField(
-        "Порядковый номер", default=2
+        "Порядковый номер", default=0
     )
     image = models.ImageField("Изображение места")
     tour_detailes = models.ForeignKey(
