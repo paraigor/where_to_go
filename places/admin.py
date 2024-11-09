@@ -1,12 +1,20 @@
 from django.contrib import admin
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from .models import Tour, TourDetailes, TourImage
 
 
 class TourImageInline(admin.TabularInline):
     model = TourImage
-    fields = ("image", "ordinal_number")
     extra = 0
+    readonly_fields = ["preview"]
+    fields = ("image", "preview", "ordinal_number")
+
+    def preview(self, obj):
+        return format_html(
+            mark_safe(f"<img src='{obj.image.url}' height='200' />")
+        )
 
 
 @admin.register(TourDetailes)
@@ -24,5 +32,6 @@ class TourAdmin(admin.ModelAdmin):
         (None, {"fields": ("title", "detailes")}),
         ("Координаты", {"fields": ("longitude", "latitude")}),
     )
+
 
 admin.site.register(TourImage)
