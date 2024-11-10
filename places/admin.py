@@ -24,6 +24,7 @@ class TourDetailsAdmin(SortableAdminMixin, admin.ModelAdmin):
         (None, {"fields": ("title", "description_short", "description_long")}),
         ("Координаты", {"fields": ("longitude", "latitude")}),
     )
+    search_fields = ["title"]
     inlines = [TourImageInline]
 
 
@@ -33,6 +34,7 @@ class TourAdmin(admin.ModelAdmin):
         (None, {"fields": ("title", "details")}),
         ("Координаты", {"fields": ("longitude", "latitude")}),
     )
+    search_fields = ["title"]
 
 
 admin.site.register(TourImage)
