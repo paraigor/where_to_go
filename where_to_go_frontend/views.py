@@ -1,49 +1,42 @@
 from django.shortcuts import render
 
-from places.models import Tour
+from places.models import Place
 
 
 def index(request):
-    tours = (
-        Tour.objects.all()
-        .prefetch_related("details")
-        .prefetch_related("details__images")
-    )
-    places = []
-    for tour in tours:
-        tour_details = tour.details
-        place = {
+    places = Place.objects.all().prefetch_related("place__images")
+    locations = []
+    for place in places:
+        location = {
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [tour.longitude, tour.latitude],
+                "coordinates": [place.longitude, place.latitude],
             },
             "properties": {
-                "title": tour.title,
-                "placeId": tour.id,
+                "title": place.title,
+                "placeId": place.id,
                 "details": {
-                    "title": tour_details.title,
+                    "title": place.title,
                     "imgs": [
-                        img.image.url for img in tour_details.images.all()
+                        img.image.url for img in place.images.all()
                     ],
-                    "description_short": tour_details.description_short,
-                    "description_long": tour_details.description_long,
+                    "description_short": place.description_short,
+                    "description_long": place.description_long,
                     "coordinates": {
-                        "lng": tour_details.longitude,
-                        "lat": tour_details.latitude,
+                        "lng": place.longitude,
+                        "lat": place.latitude,
                     },
                 }
-                if tour_details
-                else None,
             },
         }
 
-        places.append(place)
+        locations.append(location)
 
     context = {
         "places_geojson": {
             "type": "FeatureCollection",
-            "features": places,
+            "features": locations,
         }
     }
 

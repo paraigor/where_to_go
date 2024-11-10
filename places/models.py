@@ -2,7 +2,7 @@ from django.db import models
 from tinymce import models as tinymce_models
 
 
-class TourDetails(models.Model):
+class Place(models.Model):
     title = models.CharField("Название", max_length=200)
     description_short = models.CharField("Короткое описание", max_length=250)
     description_long = tinymce_models.HTMLField("Полное описание")
@@ -14,47 +14,31 @@ class TourDetails(models.Model):
 
     class Meta:
         ordering = ["id"]
-        verbose_name = "Детали тура"
-        verbose_name_plural = "Детали туров"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["longitude", "latitude"], name="unigue_coordinates"
+            ),
+        ]
+        verbose_name = "Локация"
+        verbose_name_plural = "Локации"
 
 
-class Tour(models.Model):
-    title = models.CharField("Название", max_length=200)
-    longitude = models.FloatField("Долгота")
-    latitude = models.FloatField("Широта")
-    details = models.ForeignKey(
-        TourDetails,
-        on_delete=models.PROTECT,
-        null=True,
-        verbose_name="Детали тура",
-        related_name="tour",
-    )
-
-    def __str__(self) -> str:
-        return self.title
-
-    class Meta:
-        verbose_name = "Тур"
-        verbose_name_plural = "Туры"
-
-
-class TourImage(models.Model):
+class PlaceImage(models.Model):
     ordinal_number = models.PositiveSmallIntegerField(
         "Порядковый номер", default=0
     )
-    image = models.ImageField("Изображение места")
-    tour_details = models.ForeignKey(
-        TourDetails,
-        on_delete=models.SET_NULL,
-        null=True,
-        verbose_name="Тур",
+    image = models.ImageField("Фото локации")
+    place = models.ForeignKey(
+        Place,
+        on_delete=models.PROTECT,
+        verbose_name="Локация",
         related_name="images",
     )
 
     def __str__(self) -> str:
-        return f"{self.ordinal_number} {self.tour_details.title}"
+        return f"{self.ordinal_number} {self.place.title}"
 
     class Meta:
         ordering = ["ordinal_number"]
-        verbose_name = "Картинка тура"
-        verbose_name_plural = "Картинки туров"
+        verbose_name = "Фото локации"
+        verbose_name_plural = "Фото локаций"

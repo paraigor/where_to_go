@@ -3,11 +3,11 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from .models import Tour, TourDetails, TourImage
+from .models import Place, PlaceImage
 
 
-class TourImageInline(SortableTabularInline):
-    model = TourImage
+class PlaceImageInline(SortableTabularInline):
+    model = PlaceImage
     extra = 0
     readonly_fields = ["preview"]
     fields = ("image", "preview", "ordinal_number")
@@ -18,23 +18,14 @@ class TourImageInline(SortableTabularInline):
         )
 
 
-@admin.register(TourDetails)
+@admin.register(Place)
 class TourDetailsAdmin(SortableAdminMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ("title", "description_short", "description_long")}),
         ("Координаты", {"fields": ("longitude", "latitude")}),
     )
     search_fields = ["title"]
-    inlines = [TourImageInline]
+    inlines = [PlaceImageInline]
 
 
-@admin.register(Tour)
-class TourAdmin(admin.ModelAdmin):
-    fieldsets = (
-        (None, {"fields": ("title", "details")}),
-        ("Координаты", {"fields": ("longitude", "latitude")}),
-    )
-    search_fields = ["title"]
-
-
-admin.site.register(TourImage)
+admin.site.register(PlaceImage)
