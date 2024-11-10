@@ -39,7 +39,7 @@ $ py manage.py createsuperuser
 ```
 Start Django local web server:
 ```
-py manage.py runserver
+$ py manage.py runserver
 ```
 
 Check [this](https://docs.djangoproject.com/en/5.0/howto/deployment/) article for project deployment.
@@ -50,6 +50,13 @@ View locally started web site, go to [http://127.0.0.1:8000](http://127.0.0.1:80
 
 Django admin site available at [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin).  
 New places can be added here.  
+Also new places can be added from JSON file by management command:
+```
+$ py manage.py load_place http://example.com/place.json
+- or -
+$ py manage.py load_place path/to/place.json
+```
+
 Place's photos can be sorted at place's admin page. First photo used as main place photo at frontend page.
 
 Some details about place can be fetched in JSON format at `http://127.0.0.1:8000/places/<place_id>`.
