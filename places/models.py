@@ -2,7 +2,7 @@ from django.db import models
 from tinymce import models as tinymce_models
 
 
-class TourDetailes(models.Model):
+class TourDetails(models.Model):
     title = models.CharField("Название", max_length=200)
     description_short = models.CharField("Короткое описание", max_length=250)
     description_long = tinymce_models.HTMLField("Полное описание")
@@ -22,8 +22,8 @@ class Tour(models.Model):
     title = models.CharField("Название", max_length=200)
     longitude = models.FloatField("Долгота")
     latitude = models.FloatField("Широта")
-    detailes = models.ForeignKey(
-        TourDetailes,
+    details = models.ForeignKey(
+        TourDetails,
         on_delete=models.PROTECT,
         null=True,
         verbose_name="Детали тура",
@@ -43,8 +43,8 @@ class TourImage(models.Model):
         "Порядковый номер", default=0
     )
     image = models.ImageField("Изображение места")
-    tour_detailes = models.ForeignKey(
-        TourDetailes,
+    tour_details = models.ForeignKey(
+        TourDetails,
         on_delete=models.SET_NULL,
         null=True,
         verbose_name="Тур",
@@ -52,7 +52,7 @@ class TourImage(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"{self.ordinal_number} {self.tour_detailes.title}"
+        return f"{self.ordinal_number} {self.tour_details.title}"
 
     class Meta:
         ordering = ["ordinal_number"]

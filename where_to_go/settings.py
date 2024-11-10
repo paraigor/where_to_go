@@ -30,9 +30,15 @@ SECRET_KEY = env.str("DJANGO_SECRET_KEY", "REPLACE_ME")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DJANGO_DEBUG", False)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", [".localhost", "127.0.0.1", "[::1]"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-INTERNAL_IPS = ["127.0.0.1"]
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", True)
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", True)
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", True)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", True)
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", 3600)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", True)
+
 
 # Application definition
 
@@ -45,7 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'where_to_go_frontend.apps.WhereToGoFrontendConfig',
     'places.apps.PlacesConfig',
-    'debug_toolbar',
     'adminsortable2',
     'tinymce',
 ]
@@ -58,7 +63,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'where_to_go.urls'
@@ -122,12 +126,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / 'static/'
 STATIC_URL = 'static/'
 
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = 'media/'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+}

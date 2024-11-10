@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
-from .models import Tour, TourDetailes, TourImage
+from .models import Tour, TourDetails, TourImage
 
 
 class TourImageInline(SortableTabularInline):
@@ -18,8 +18,8 @@ class TourImageInline(SortableTabularInline):
         )
 
 
-@admin.register(TourDetailes)
-class TourDetailesAdmin(SortableAdminMixin, admin.ModelAdmin):
+@admin.register(TourDetails)
+class TourDetailsAdmin(SortableAdminMixin, admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ("title", "description_short", "description_long")}),
         ("Координаты", {"fields": ("longitude", "latitude")}),
@@ -30,7 +30,7 @@ class TourDetailesAdmin(SortableAdminMixin, admin.ModelAdmin):
 @admin.register(Tour)
 class TourAdmin(admin.ModelAdmin):
     fieldsets = (
-        (None, {"fields": ("title", "detailes")}),
+        (None, {"fields": ("title", "details")}),
         ("Координаты", {"fields": ("longitude", "latitude")}),
     )
 

@@ -1,23 +1,17 @@
-from django.db.models import Prefetch
 from django.shortcuts import render
 
-from places.models import Tour, TourImage
+from places.models import Tour
 
 
 def index(request):
     tours = (
         Tour.objects.all()
-        .prefetch_related("detailes")
-        .prefetch_related(
-            Prefetch(
-                "detailes__images",
-                queryset=TourImage.objects.order_by("ordinal_number"),
-            )
-        )
+        .prefetch_related("details")
+        .prefetch_related("details__images")
     )
     places = []
     for tour in tours:
-        tour_detailes = tour.detailes
+        tour_details = tour.details
         place = {
             "type": "Feature",
             "geometry": {
@@ -28,18 +22,18 @@ def index(request):
                 "title": tour.title,
                 "placeId": tour.id,
                 "details": {
-                    "title": tour_detailes.title,
+                    "title": tour_details.title,
                     "imgs": [
-                        img.image.url for img in tour_detailes.images.all()
+                        img.image.url for img in tour_details.images.all()
                     ],
-                    "description_short": tour_detailes.description_short,
-                    "description_long": tour_detailes.description_long,
+                    "description_short": tour_details.description_short,
+                    "description_long": tour_details.description_long,
                     "coordinates": {
-                        "lng": tour_detailes.longitude,
-                        "lat": tour_detailes.latitude,
+                        "lng": tour_details.longitude,
+                        "lat": tour_details.latitude,
                     },
                 }
-                if tour_detailes
+                if tour_details
                 else None,
             },
         }
