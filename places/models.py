@@ -13,7 +13,7 @@ class TourDetails(models.Model):
         return self.title
 
     class Meta:
-        ordering = ["title"]
+        ordering = ["id"]
         verbose_name = "Детали тура"
         verbose_name_plural = "Детали туров"
 

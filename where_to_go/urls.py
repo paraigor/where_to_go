@@ -25,6 +25,6 @@ from where_to_go_frontend import views as index_views
 urlpatterns = [
     path("", index_views.index),
     path("places/", include("places.urls")),
-    path("admin/", admin.site.urls),
     path("tinymce/", include("tinymce.urls")),
+    path("admin/", admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
