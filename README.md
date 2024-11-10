@@ -3,6 +3,8 @@
 Website about most interesting places in Moscow. Artyom's author's project.  
 Based on Django ORM system.
 
+### [View demo](https://skir.pythonanywhere.com/)
+
 ## Installation
 
 Python3 should already be installed. Version 3.11.* recommended.
