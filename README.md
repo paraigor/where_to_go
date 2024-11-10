@@ -61,5 +61,22 @@ Place's photos can be sorted at place's admin page. First photo used as main pla
 
 Some details about place can be fetched in JSON format at `http://127.0.0.1:8000/places/<place_id>`.
 
+Example of JSON file:
+```
+{
+    "title": "Экскурсионный проект «Крыши24.рф»",
+    "imgs": [
+        "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/af7b8599fec9d2542a011f1d01d459e2.jpg",
+        "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/965c5a3ff5b2431e646d30b6744afd2d.jpg",
+    ],
+    "description_short": "Хотите увидеть Москву с высоты и разделить яркие ...",
+    "description_long": "<p>Проект «Крыши24.рф» проводит экскурсии и меро... </p>",
+    "coordinates": {
+        "lng": "37.32478399999957",
+        "lat": "55.70731600000015"
+    }
+}
+```
+
 ## Project Goals
 The code is written for educational purposes on online-course for web-developers dvmn.org.
