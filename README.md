@@ -7,6 +7,7 @@ Based on Django ORM system.
 
 ## Installation
 
+Project tested under Python versions: **3.9.13, 3.10.11, 3.11.9, 3.12.4**.  
 Python3 should already be installed. Version 3.11.* recommended.
 Use `pip` (or `pip3`, if there is a conflict with Python2) to install dependencies:
 ```
