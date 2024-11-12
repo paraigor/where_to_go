@@ -8,7 +8,7 @@ Based on Django ORM system.
 ## Installation
 
 Project tested under Python versions: **3.9.13, 3.10.11, 3.11.9, 3.12.4**.  
-Python3 should already be installed. Version 3.11.* recommended.
+Python3 should already be installed.  
 Use `pip` (or `pip3`, if there is a conflict with Python2) to install dependencies:
 ```
 pip install -r requirements.txt
@@ -17,16 +17,30 @@ pip install -r requirements.txt
 Security sensitive information highly recommended to store in environmental variables.  
 Example of `.env` file for development environment:
 ```
+# A secret key for a particular Django installation. This is used to provide cryptographic signing, and should be set to a unique, unpredictable value. 50 symbols minimum is recommended.
 DJANGO_SECRET_KEY = "xxxXXXxxxXXXXxxxx"
+
+# A boolean that turns on/off debug mode. If your app raises an exception when DEBUG is True, Django will display a detailed traceback, including a lot of metadata about your environment. For production environment, False value highly recommended.
 DJANGO_DEBUG = True
+
+# A list of strings representing the host/domain names that this Django site can serve. This is a security measure to prevent HTTP Host header attacks.
 ALLOWED_HOSTS = .localhost,127.0.0.1,[::1]
+
+# Database connection string in "ENGINE://USER:PASSWORD@HOST:PORT/NAME" format.
 DATABASE_URL = sqlite:///db.sqlite3
 
+# Whether to use a secure cookie for the CSRF and session cookie. If this is set to True, the cookie will be marked as “secure”, which means browsers may ensure that the cookie is only sent with an HTTPS connection. Set True for production.
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE = False
+
+# If True, the SecurityMiddleware redirects all non-HTTPS requests to HTTPS.
 SECURE_SSL_REDIRECT = False
+
+# If True, the SecurityMiddleware adds the includeSubDomains directive to the HTTP Strict Transport Security header. It has no effect unless SECURE_HSTS_SECONDS is set to a non-zero value.
 SECURE_HSTS_INCLUDE_SUBDOMAINS = False
 SECURE_HSTS_SECONDS = 31536000
+
+# If True, the SecurityMiddleware adds the preload directive to the HTTP Strict Transport Security header. It has no effect unless SECURE_HSTS_SECONDS is set to a non-zero value.
 SECURE_HSTS_PRELOAD = False
 ```
 
