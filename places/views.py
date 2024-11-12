@@ -5,7 +5,7 @@ from .models import Place
 
 
 def index(request):
-    places = Place.objects.all().prefetch_related("images")
+    places = Place.objects.prefetch_related("images")
     locations = []
     for place in places:
         location = {
