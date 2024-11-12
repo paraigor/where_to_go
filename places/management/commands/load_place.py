@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 
 import requests
-from django.core import files
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
@@ -63,9 +62,7 @@ class Command(BaseCommand):
                 img_file_name = img_link.split("/")[-1]
 
                 PlaceImage.objects.create(
-                    image=files.File(
-                        ContentFile(response.content), img_file_name
-                    ),
+                    image=ContentFile(response.content, img_file_name),
                     place=place,
                 )
 
