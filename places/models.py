@@ -3,7 +3,7 @@ from tinymce import models as tinymce_models
 
 
 class Place(models.Model):
-    title = models.CharField("Название", max_length=200)
+    title = models.CharField("Название", max_length=200, unique=True)
     short_description = models.TextField(
         "Короткое описание", null=True, blank=True
     )
@@ -48,4 +48,4 @@ class PlaceImage(models.Model):
         verbose_name_plural = "Фото локаций"
 
     def __str__(self) -> str:
-        return f"{self.ordinal_number} {self.place.title if self.place else None} фото"
+        return f"Photo {self.ordinal_number} {self.place.title if self.place else None}"

@@ -5,6 +5,7 @@ import requests
 from django.core import files
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
+from django.db.utils import IntegrityError
 
 from places.models import Place, PlaceImage
 
@@ -38,15 +39,18 @@ class Command(BaseCommand):
                 raise CommandError("Wrong URL")
             location = response.json()
 
-        place, created = Place.objects.get_or_create(
-            title=location["title"],
-            short_description=location["description_short"],
-            long_description=location["description_long"],
-            defaults={
-                "longitude": location["coordinates"]["lng"],
-                "latitude": location["coordinates"]["lat"],
-            },
-        )
+        try:
+            place, created = Place.objects.get_or_create(
+                title=location["title"],
+                longitude=location["coordinates"]["lng"],
+                latitude=location["coordinates"]["lat"],
+                defaults={
+                    "short_description": location["description_short"],
+                    "long_description": location["description_long"],
+                },
+            )
+        except IntegrityError as err:
+            raise CommandError(f"Place already exist\n{err}")
 
         if created:
             for img_link in location["imgs"]:
