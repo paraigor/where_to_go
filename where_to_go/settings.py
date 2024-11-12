@@ -11,7 +11,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", validate=lambda key: len(key) >= 32)
 
 DEBUG = env.bool("DJANGO_DEBUG", False)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", [".localhost", "127.0.0.1", "[::1]"])
 
 CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", True)
 SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", True)
