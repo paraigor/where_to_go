@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from where_to_go_frontend import views as index_views
+from places import views as index_views
 
 urlpatterns = [
     path("", index_views.index),
