@@ -15,6 +15,7 @@ pip install -r requirements.txt
 ```
 
 Security sensitive information highly recommended to store in environmental variables.  
+! Project willn't start with key less then 32 symbols.  
 Example of `.env` file for development environment:
 ```
 # A secret key for a particular Django installation. This is used to provide cryptographic signing, and should be set to a unique, unpredictable value. 50 symbols minimum is recommended.
