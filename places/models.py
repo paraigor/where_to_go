@@ -31,10 +31,10 @@ class PlaceImage(models.Model):
     ordinal_number = models.PositiveSmallIntegerField(
         "Порядковый номер", default=0
     )
-    image = models.ImageField("Фото локации", null=True)
+    image = models.ImageField("Фото локации")
     place = models.ForeignKey(
         Place,
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True,
         blank=True,
         verbose_name="Локация",

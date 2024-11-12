@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 
 import requests
+from django.core import files
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
 
@@ -39,8 +40,8 @@ class Command(BaseCommand):
 
         place, created = Place.objects.get_or_create(
             title=location["title"],
-            description_short=location["description_short"],
-            description_long=location["description_long"],
+            short_description=location["description_short"],
+            long_description=location["description_long"],
             defaults={
                 "longitude": location["coordinates"]["lng"],
                 "latitude": location["coordinates"]["lat"],
@@ -57,9 +58,11 @@ class Command(BaseCommand):
 
                 img_file_name = img_link.split("/")[-1]
 
-                place_image = PlaceImage.objects.create(place=place)
-                place_image.image.save(
-                    img_file_name, ContentFile(response.content), save=True
+                PlaceImage.objects.create(
+                    image=files.File(
+                        ContentFile(response.content), img_file_name
+                    ),
+                    place=place,
                 )
 
         self.stdout.write("Successfully loaded!")
