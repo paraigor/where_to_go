@@ -13,9 +13,6 @@ class Place(models.Model):
     longitude = models.FloatField("Долгота")
     latitude = models.FloatField("Широта")
 
-    def __str__(self) -> str:
-        return self.title
-
     class Meta:
         ordering = ["id"]
         constraints = [
@@ -25,6 +22,9 @@ class Place(models.Model):
         ]
         verbose_name = "Локация"
         verbose_name_plural = "Локации"
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class PlaceImage(models.Model):
@@ -41,10 +41,10 @@ class PlaceImage(models.Model):
         related_name="images",
     )
 
-    def __str__(self) -> str:
-        return f"{self.ordinal_number} {self.place.title}"
-
     class Meta:
         ordering = ["ordinal_number"]
         verbose_name = "Фото локации"
         verbose_name_plural = "Фото локаций"
+
+    def __str__(self) -> str:
+        return f"{self.ordinal_number} {self.place.title if self.place else None} фото"
