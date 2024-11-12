@@ -12,7 +12,10 @@ class PlaceImageInline(SortableTabularInline):
     fields = ("image", "preview", "ordinal_number")
 
     def preview(self, obj):
-        return format_html("<img src='{}' height='200' />", obj.image.url)
+        return format_html(
+            "<img src='{}' height='200' style='max-width:400px; max-height:200px' />",
+            obj.image.url,
+        )
 
 
 @admin.register(Place)
